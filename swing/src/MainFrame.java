@@ -1,3 +1,9 @@
+// 编写一个Java程序，该程序能够创建一个主窗口，并在该窗口中创建一个菜单栏。
+//菜单栏中包含三个菜单项：出库、入库和库存查询。
+//导入所需的库和自定义的类
+import view.in_store;
+import view.out_store;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,11 +13,50 @@ public class MainFrame extends JFrame {
     public MainFrame(){
         //主窗口属性
         setTitle("商品库存管理系统");
-        setSize(800,600);
+        setSize(600,500);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //创建菜单
         JMenuBar menuBar =new JMenuBar();
         setJMenuBar(menuBar);
+
+        // 创建菜单项
+        JMenu menu1 = new JMenu("仓库管理");
+        JMenuItem menuItem1 = new JMenuItem("出库");
+        JMenuItem menuItem2 = new JMenuItem("入库");
+        menu1.add(menuItem1);
+        menu1.add(menuItem2);
+        menuBar.add(menu1);
+
+        JMenu menu2 = new JMenu("库存管理");
+        JMenuItem menuItem3 = new JMenuItem("库存查询");
+        menu2.add(menuItem3);
+        menuBar.add(menu2);
+
+        JMenu menu3 = new JMenu("系统管理");
+        JMenuItem menuItem4 = new JMenuItem("修改密码");
+        menu3.add(menuItem4);
+        menuBar.add(menu3);
+
+        // 为“出库”菜单项添加事件监听器
+        menuItem1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new out_store().setVisible(true);
+            }
+        });
+
+        // 为“入库”菜单项添加事件监听器
+        menuItem2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new in_store().setVisible(true);
+            }
+        });
+
+    }
+    //测试用，接入时请注释掉
+    public static void main(String []args){
+        new MainFrame().setVisible(true);
     }
 }
