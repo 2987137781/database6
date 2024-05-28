@@ -53,7 +53,7 @@ public class out_store extends JFrame {
         out_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JOptionPane.showMessageDialog(null,"出库成功！","出库",JOptionPane.DEFAULT_OPTION);
             }
         });
         setVisible(true);
