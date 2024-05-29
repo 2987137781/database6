@@ -4,18 +4,62 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * 数据库连接类
+ */
 public class DatabaseConnection {
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/InventoryManagement";
-    private static final String JDBC_USER = "root";
-    private static final String JDBC_PASSWORD = "123456";
+
+    // JDBC URL, username, and password of MySQL server
+    private static final String URL = "jdbc:mysql://localhost:3306/goods";
+    private static final String USER = "root";
+    private static final String PASSWORD = "123456";
+
+    private static Connection connection;
+
+    static {
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Database connected successfully.");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to connect to the database.");
+        }
+    }
 
     public static Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+        return connection;
+    }
+
+
+    public static void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+                System.out.println("Database connection closed.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //测试连接结果
+    public static void main(String[] args) {
+        // SQL query to select all from employee table
+        String query = "SELECT * FROM employee";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // Assuming employee table has columns: id, name, position, salary
+                System.out.println("ID: " + resultSet.getString("id"));
+                System.out.println("Name: " + resultSet.getString("name"));
+                System.out.println("--------------------------");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
-        return connection;
     }
 }
