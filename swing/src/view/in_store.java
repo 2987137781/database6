@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+
 public class in_store extends JFrame {
     public  in_store(){
         // super("出库管理");
@@ -53,7 +55,7 @@ public class in_store extends JFrame {
         in_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JOptionPane.showMessageDialog(null,"入库成功！","入库",JOptionPane.DEFAULT_OPTION);
             }
         });
         setVisible(true);
